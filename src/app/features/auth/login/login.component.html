@@ -1,0 +1,147 @@
+<div class="login-page">
+
+  <div class="background-shape shape-one"></div>
+  <div class="background-shape shape-two"></div>
+  <div class="background-shape shape-three"></div>
+
+  <div class="login-card">
+
+    <div class="login-header">
+
+      <div class="logo">
+        Talent<span>Flow</span>
+      </div>
+
+      <div class="welcome-icon">
+        👋
+      </div>
+
+      <h1>Bienvenue !</h1>
+
+      <p>
+        Connectez-vous pour continuer votre expérience TalentFlow.
+      </p>
+
+    </div>
+
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+    >
+
+      <div class="form-group">
+
+        <label for="email">
+          Adresse email
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">✉</span>
+
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="exemple@email.com"
+          />
+
+        </div>
+
+        @if (
+          loginForm.get('email')?.touched &&
+          loginForm.get('email')?.invalid
+        ) {
+          <small class="error-text">
+            Veuillez entrer une adresse email valide.
+          </small>
+        }
+
+      </div>
+
+      <div class="form-group">
+
+        <div class="password-label">
+
+          <label for="password">
+            Mot de passe
+          </label>
+
+          <a routerLink="/forgot-password">
+  Mot de passe oublié ?
+</a>
+
+        </div>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">🔒</span>
+
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            placeholder="Votre mot de passe"
+          />
+
+        </div>
+
+        @if (
+          loginForm.get('password')?.touched &&
+          loginForm.get('password')?.invalid
+        ) {
+          <small class="error-text">
+            Le mot de passe est obligatoire.
+          </small>
+        }
+
+      </div>
+
+      @if (errorMessage) {
+
+        <div class="login-error">
+          {{ errorMessage }}
+        </div>
+
+      }
+
+      <button
+        type="submit"
+        class="login-button"
+        [disabled]="loading"
+      >
+
+        @if (!loading) {
+
+          <span>Se connecter</span>
+          <span class="arrow">→</span>
+
+        } @else {
+
+          <span>Connexion...</span>
+
+        }
+
+      </button>
+
+    </form>
+
+    <div class="divider">
+      <span>ou</span>
+    </div>
+
+    <div class="register-link">
+
+      <span>
+        Vous n'avez pas encore de compte ?
+      </span>
+
+      <a routerLink="/register">
+        Créer un compte
+      </a>
+
+    </div>
+
+  </div>
+
+</div>

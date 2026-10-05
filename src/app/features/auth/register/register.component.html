@@ -1,0 +1,327 @@
+<div class="register-page">
+
+  <div class="background-shape shape-one"></div>
+  <div class="background-shape shape-two"></div>
+  <div class="background-shape shape-three"></div>
+
+  <div class="register-card">
+
+    <!-- HEADER -->
+    <div class="register-header">
+
+      <div class="logo">
+        Talent<span>Flow</span>
+      </div>
+
+      <div class="welcome-icon">
+        ✨
+      </div>
+
+      <h1>Créer votre compte</h1>
+
+      <p>
+        Rejoignez TalentFlow et présentez vos compétences.
+      </p>
+
+    </div>
+
+
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+    >
+
+      <!-- PRÉNOM / NOM -->
+      <div class="form-row">
+
+        <div class="form-group">
+
+          <label for="firstName">
+            Prénom
+          </label>
+
+          <div class="input-wrapper">
+
+            <span class="input-icon">👤</span>
+
+            <input
+              id="firstName"
+              type="text"
+              formControlName="firstName"
+              placeholder="Votre prénom"
+            />
+
+          </div>
+
+          @if (
+            registerForm.get('firstName')?.touched &&
+            registerForm.get('firstName')?.invalid
+          ) {
+            <small class="error-text">
+              Le prénom est obligatoire.
+            </small>
+          }
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="lastName">
+            Nom
+          </label>
+
+          <div class="input-wrapper">
+
+            <span class="input-icon">👤</span>
+
+            <input
+              id="lastName"
+              type="text"
+              formControlName="lastName"
+              placeholder="Votre nom"
+            />
+
+          </div>
+
+          @if (
+            registerForm.get('lastName')?.touched &&
+            registerForm.get('lastName')?.invalid
+          ) {
+            <small class="error-text">
+              Le nom est obligatoire.
+            </small>
+          }
+
+        </div>
+
+      </div>
+
+
+      <!-- EMAIL -->
+      <div class="form-group">
+
+        <label for="email">
+          Adresse email
+        </label>
+
+        <div class="input-wrapper">
+
+          <span class="input-icon">✉</span>
+
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="exemple@email.com"
+          />
+
+        </div>
+
+        @if (
+          registerForm.get('email')?.touched &&
+          registerForm.get('email')?.invalid
+        ) {
+          <small class="error-text">
+            Veuillez entrer une adresse email valide.
+          </small>
+        }
+
+      </div>
+
+
+      <!-- MOT DE PASSE / CONFIRMATION -->
+      <div class="form-row">
+
+        <div class="form-group">
+
+          <label for="password">
+            Mot de passe
+          </label>
+
+          <div class="input-wrapper">
+
+            <span class="input-icon">🔒</span>
+
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              placeholder="Minimum 6 caractères"
+            />
+
+          </div>
+
+          @if (
+            registerForm.get('password')?.touched &&
+            registerForm.get('password')?.invalid
+          ) {
+            <small class="error-text">
+              Minimum 6 caractères.
+            </small>
+          }
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="confirmPassword">
+            Confirmation
+          </label>
+
+          <div class="input-wrapper">
+
+            <span class="input-icon">🔒</span>
+
+            <input
+              id="confirmPassword"
+              type="password"
+              formControlName="confirmPassword"
+              placeholder="Confirmez le mot de passe"
+            />
+
+          </div>
+
+          @if (
+            registerForm.get('confirmPassword')?.touched &&
+            registerForm.get('confirmPassword')?.invalid
+          ) {
+            <small class="error-text">
+              Confirmation obligatoire.
+            </small>
+          }
+
+        </div>
+
+      </div>
+
+
+      <!-- COMPÉTENCES -->
+      <div class="skills-section">
+
+        <div class="skills-header">
+
+          <div>
+
+            <label>
+              Vos compétences
+            </label>
+
+            <p>
+              Sélectionnez les technologies et compétences
+              que vous maîtrisez.
+            </p>
+
+          </div>
+
+          <span class="skills-count">
+            {{ selectedSkills.length }} sélectionnée(s)
+          </span>
+
+        </div>
+
+
+        <div class="skills-list">
+
+          @for (skill of skills; track skill) {
+
+            <button
+              type="button"
+              class="skill-tag"
+              [class.selected]="isSkillSelected(skill)"
+              (click)="toggleSkill(skill)"
+            >
+
+              @if (isSkillSelected(skill)) {
+                <span class="check">✓</span>
+              }
+
+              {{ skill }}
+
+            </button>
+
+          }
+
+        </div>
+
+
+        @if (
+          selectedSkills.length === 0
+        ) {
+
+          <small class="skills-hint">
+            Sélectionnez au moins une compétence.
+          </small>
+
+        }
+
+      </div>
+
+
+      <!-- ERREUR -->
+      @if (errorMessage) {
+
+        <div class="register-error">
+          {{ errorMessage }}
+        </div>
+
+      }
+
+
+      <!-- SUCCÈS -->
+      @if (successMessage) {
+
+        <div class="register-success">
+          {{ successMessage }}
+        </div>
+
+      }
+
+
+      <!-- BOUTON -->
+      <button
+        type="submit"
+        class="register-button"
+        [disabled]="loading"
+      >
+
+        @if (!loading) {
+
+          <span>Créer mon compte</span>
+
+          <span class="arrow">→</span>
+
+        } @else {
+
+          <span>Création du compte...</span>
+
+        }
+
+      </button>
+
+    </form>
+
+
+    <!-- DIVIDER -->
+    <div class="divider">
+      <span>ou</span>
+    </div>
+
+
+    <!-- LOGIN -->
+    <div class="login-link">
+
+      <span>
+        Vous avez déjà un compte ?
+      </span>
+
+      <a routerLink="/login">
+        Se connecter
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
